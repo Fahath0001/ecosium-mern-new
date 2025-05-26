@@ -2,7 +2,6 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 import userModel from "../models/useModel.js";
-import { json } from 'express';
 
 // Create the user Token
 const createToken = (id) => {
@@ -24,7 +23,6 @@ const loginUser = async (req, res) => {
             })
         }
         const isMatch = await bcrypt.compare(password, user.password);
-
         if (isMatch) {
             const token = createToken(user._id)
             res.json({
@@ -107,6 +105,7 @@ const registerUser = async (req, res) => {
 
     }
 }
+
 
 // Route for admin login
 const adminLogin = async (req, res) => {

@@ -1,5 +1,25 @@
 import mongoose from "mongoose";
 
+const categorySchema = new mongoose.Schema({
+    id: Number,
+    title: String,
+}, { _id: false });
+
+const mediaSchema = new mongoose.Schema({
+    mediaUrl: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String, // 'image' or 'video'
+        required: true,
+    },
+    videoDuration: {
+        type: Number, // duration in seconds (only for videos)
+        default: null,
+    },
+}, { timestamps: true });
+
 const eventSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -10,28 +30,22 @@ const eventSchema = new mongoose.Schema({
         required: true,
     },
     category: {
-        type: String,
-        required: true,
-    },
-    subCategory: {
-        type: String,
-        required: true,
+        type: [categorySchema], // array of simplified category objects
+        required: true
     },
     discriptions: {
-        type: Array,
-        required: true,
+        type: String,
+        required: true
     },
     bestSeller: {
-        type: Boolean,
-        required: true,
+        type: Boolean
     },
-    image: {
-        type: Array,
-        required: true,
+    media: {
+        type: [mediaSchema], // array of simplified category objects
+ 
     },
     eventDate: {
-        type: Date,
-        required: true,
+        type: Date
     }
 }, {
     minimize: false,

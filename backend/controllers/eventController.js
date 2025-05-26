@@ -1,84 +1,88 @@
-import { v2 as cloudinary } from 'cloudinary';
 import eventModel from '../models/eventsModel.js';
+import { v2 as cloudinary } from 'cloudinary';
 
 
 // Function for add event
+import MediaModel from '../models/Media.js';
+
 const addEvent = async (req, res) => {
   try {
+    const {
+      name,
+      price,
+      category,
+      subCategory,
+      discriptions,
+      bestSeller,
+      eventDate
+    } = req.body;
 
-    const { name, price, category, subCategory, discriptions, bestSeller, eventDate } = req.body;
-    const image1 = req.files.image1 && req.files.image1[0];
-    const image2 = req.files.image2 && req.files.image2[0];
-    const image3 = req.files.image3 && req.files.image3[0];
-    const image4 = req.files.image4 && req.files.image4[0];
-
-
-    const images = [image1, image2, image3, image4].filter((item) => {
-      return item !== undefined
-    });
-
-    let imagesUrl = await Promise.all(
-      images.map(async (item) => {
-        let result = await cloudinary.uploader.upload(item.path, { resource_type: 'image' });
-        return result.secure_url
-      })
-    )
-
-    // if uploade the  Vedio
-
-    /*
-    
-    let mediaUrls = await Promise.all(
-  mediaFiles.map(async (item) => {
-    const isVideo = item.mimetype?.startsWith('video') || item.path.endsWith('.mp4'); // basic check
-    let result = await cloudinary.uploader.upload(item.path, {
-      resource_type: isVideo ? 'video' : 'image'
-    });
-    return result.secure_url;
-  })
-);
-    
-    */
-
-
-    // Convert date string "DD/MM/YYYY" → Date object
+    // Convert eventDate
     let formattedEventDate = null;
     if (eventDate) {
       const [day, month, year] = eventDate.split('/');
       formattedEventDate = new Date(`${year}-${month}-${day}`);
     }
 
+    // Upload media files to Cloudinary and save in MediaModel
+    const mediaArray = [];
+    if (req.files && req.files.length > 0) {
+
+      for (const file of req.files) {
+        const uploadResult = await cloudinary.uploader.upload(file.path, {
+          resource_type: 'auto',
+          folder: 'your-folder-name',
+        });
+
+        const newMedia = new MediaModel({
+          mediaUrl: uploadResult.secure_url,
+          type: uploadResult.resource_type,
+          videoDuration: uploadResult.resource_type === 'video' ? Math.floor(uploadResult.duration) : null,
+        });
+
+        const savedMedia = await newMedia.save();
+
+        mediaArray.push({
+          id: savedMedia._id,
+          mediaUrl: savedMedia.mediaUrl,
+          type: savedMedia.type,
+          videoDuration: savedMedia.videoDuration,
+        });
+      }
+    }
+
+    console.log(mediaArray);
+
+
     const eventData = {
       name,
       price: Number(price),
-      category,
+      category: JSON.parse(category),
       subCategory,
       discriptions,
       bestSeller: bestSeller === "true",
-      image: imagesUrl,
+      media: mediaArray,
       eventDate: formattedEventDate,
     };
-
-    console.log(eventData);
 
     const event = new eventModel(eventData);
     await event.save();
 
     res.json({
       success: true,
-      message: "Sucess full add Event",
+      message: "Successfully added event",
       eventId: event._id
-    })
-
+    });
 
   } catch (error) {
     console.error("Add Event Error:", error);
-    res.json({
+    res.status(500).json({
       success: false,
       message: error.message
     });
   }
 };
+
 
 
 // Function for list event

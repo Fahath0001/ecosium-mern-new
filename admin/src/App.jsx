@@ -13,7 +13,7 @@ import Orders from "./pages/Orders.jsx";
 export const backendUrl = import.meta.env.VITE_ECOSIUM_BACKEND_URL;
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : "hgfy")
+  const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : "")
 
   useEffect(() => {
     localStorage.setItem('token', token)

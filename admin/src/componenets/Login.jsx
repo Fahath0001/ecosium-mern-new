@@ -2,29 +2,45 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
+import Notification from './Notification';
 
 export const Login = ({ setToken }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [notification, setNotification] = useState({
+        show: false,
+        message: '',
+        type: '',
+    });
 
     const onSubmitHandler = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
+
             const response = await axios.post(backendUrl + '/api/user/admin', { email, password })
             if (response.data.sucess) {
                 console.log("token_is" + response.data.token);
                 setToken(response.data.token);
             } else {
-                toast.error(response.data.message);
+                setNotification({ show: true, message: response.data.message || 'Login failed', type: 'error' });
             }
         } catch (error) {
             console.log(error);
-            toast.error(response.message);
+            setNotification({ show: true, message: error.response?.data?.message || 'Something went wrong', type: 'error' });
         }
     }
 
     return (
         <>
+
+            {notification.show && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={() => setNotification({ ...notification, show: false })}
+                />
+            )}
+
             <div className='w-full min-h-screen flex items-center justify-center'>
                 <form className='w-[70%] max-w-[900px] bg-gray-100 py-10 px-5 items-center justify-center flex flex-col gap-5'>
                     <h1 className='text-5xl font-semibold'>Ecosium Partners Portal</h1>

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: 'Inter', sans-serif;
+    text-overflow: ellipsis;
+
+
+}
+
+
 .sidebar.active{
   background-color: aqua;
 }

@@ -1,12 +1,12 @@
 import express from 'express';
-import { addEvent, listEvent, removeEvent, findEvent }from '../controllers/eventController.js';
-import upload from '../middleware/multer.js';
+import { addEvent, listEvent, removeEvent, findEvent } from '../controllers/eventController.js';
+import upload from '../middleware/uploadMiddleware.js';  // import the multer+cloudinary upload middleware
 import adminAuth from '../middleware/adminAuth.js';
 
 const eventRouter = express.Router();
 
-eventRouter.post('/add',adminAuth, upload.fields([{name:'image1',maxCount:1},{ name: 'image2', maxCount: 1 },{name:'image3',maxCount:1},{ name: 'image4', maxCount: 1 }]), addEvent);
-eventRouter.get('/list',adminAuth, listEvent);
+eventRouter.post('/add', adminAuth, upload.array('mediaFiles', 10), addEvent);
+eventRouter.get('/list', adminAuth, listEvent);
 eventRouter.post('/remove', removeEvent);
 eventRouter.post('/find', findEvent);
 
