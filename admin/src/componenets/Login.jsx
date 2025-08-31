@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
 import Notification from './Notification';
+import { assets } from '../assets/assets.js';
 
 export const Login = ({ setToken }) => {
     const [email, setEmail] = useState("");
@@ -43,9 +44,17 @@ export const Login = ({ setToken }) => {
 
             <div className='w-full min-h-screen flex items-center justify-center'>
                 <form className='w-[70%] max-w-[900px] bg-gray-100 py-10 px-5 items-center justify-center flex flex-col gap-5'>
-                    <h1 className='text-5xl font-semibold'>Ecosium Partners Portal</h1>
-                    <h1 className='text-3xl font-medium'>Login</h1>
-                    <div className='w-[70%] flex flex-col gap-1 '>
+                    <img
+                        className='w-[200px]'
+                        src={assets.logo}
+                        alt=""
+                    />
+                    <h1
+                        className='text-5xl font-semibold'
+                    >
+                        Admin Portal
+                    </h1>
+                    <div className='w-[70%] flex flex-col gap-1 mt-2 '>
                         <label>Email Address </label>
                         <input
                             className='w-[100%] text-lg py-2 pl-3 rounded-lg border-black border'

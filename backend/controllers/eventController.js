@@ -1,4 +1,4 @@
-import eventModel from '../models/eventsModel.js';
+import eventModel from '../models/eventModel.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 
@@ -9,25 +9,19 @@ const addEvent = async (req, res) => {
   try {
     const {
       name,
-      price,
+      tickets,
       category,
-      subCategory,
-      discriptions,
-      bestSeller,
-      eventDate
+      description, // ✅ correct spelling now
+      bestSeller
     } = req.body;
 
-    // Convert eventDate
-    let formattedEventDate = null;
-    if (eventDate) {
-      const [day, month, year] = eventDate.split('/');
-      formattedEventDate = new Date(`${year}-${month}-${day}`);
-    }
 
-    // Upload media files to Cloudinary and save in MediaModel
+
+
+
+    // ✅ Upload media to Cloudinary
     const mediaArray = [];
     if (req.files && req.files.length > 0) {
-
       for (const file of req.files) {
         const uploadResult = await cloudinary.uploader.upload(file.path, {
           resource_type: 'auto',
@@ -37,7 +31,9 @@ const addEvent = async (req, res) => {
         const newMedia = new MediaModel({
           mediaUrl: uploadResult.secure_url,
           type: uploadResult.resource_type,
-          videoDuration: uploadResult.resource_type === 'video' ? Math.floor(uploadResult.duration) : null,
+          videoDuration: uploadResult.resource_type === 'video'
+            ? Math.floor(uploadResult.duration || 0)
+            : null,
         });
 
         const savedMedia = await newMedia.save();
@@ -50,38 +46,44 @@ const addEvent = async (req, res) => {
         });
       }
     }
-
-    console.log(mediaArray);
+    if (!name ) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: name, tickets, category, or description"
+      });
+    }
 
 
     const eventData = {
       name,
-      price: Number(price),
-      category: JSON.parse(category),
-      subCategory,
-      discriptions,
-      bestSeller: bestSeller === "true",
-      media: mediaArray,
-      eventDate: formattedEventDate,
+      tickets: tickets ? JSON.parse(tickets) : [],
+      category: category ? JSON.parse(category) : [],
+      description, // ✅ updated here too
+      bestSeller: bestSeller === "true" || bestSeller === true,
+      media: mediaArray
     };
+
+
+
 
     const event = new eventModel(eventData);
     await event.save();
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Successfully added event",
-      eventId: event._id
+      eventId: event._id,
     });
 
   } catch (error) {
     console.error("Add Event Error:", error);
     res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message || "Internal Server Error",
     });
   }
 };
+
 
 
 
@@ -155,5 +157,8 @@ const findEvent = async (req, res) => {
 
   }
 }
+
+
+
 
 export { addEvent, listEvent, removeEvent, findEvent };

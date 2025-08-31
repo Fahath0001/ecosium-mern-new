@@ -1,11 +1,9 @@
 import React from 'react'
 import { assets } from '../assets/assets'
-import Footer from '../components/footer'
 import Hero from '../components/Hero'
 import Categories from '../components/Categories'
-import Events from '../components/Events'
-import TopArtist from '../components/TopArtist'
 import NightLifeHero from '../assets/NightLifeHero'
+import Events from '../components/Events/Events'
 
 const NightLifePage = () => {
   return (

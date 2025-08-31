@@ -35,7 +35,7 @@ const Navbar = () => {
                     <div className='w-auto h-auto p-[4px] py-[10px] items-center justify-center flex flex-col gap-[3px] bg-gray-200 rounded-[5px] flex-grow'>
 
                         <div className='w-[90%] max-w-[1600px] h-[100%] items-center justify-center flex gap-[10px] xl:gap[30px] px-[10px] xl:px-[30px]'>
-                            <NavLink to={'/'} className='text-[14px] xs:text-[15px] xl:text-[15px] xxxl:text-xl font-medium px-4 py-1 hover:bg-primary hover:text-white hover:rounded-3xl'>
+                            <NavLink to={'/events'} className='text-[14px] xs:text-[15px] xl:text-[15px] xxxl:text-xl font-medium px-4 py-1 hover:bg-primary hover:text-white hover:rounded-3xl'>
                                 Event's
                             </NavLink>
                             <NavLink to={'/attrections'} className=' text-[14px] xs:text-[15px] xl:text-[15px] xxxl:text-xl font-medium px-4 py-1 hover:bg-primary hover:text-white hover:rounded-3xl'>

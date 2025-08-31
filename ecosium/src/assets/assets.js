@@ -46,6 +46,9 @@ import N1 from './night/hero/N06.jpg';
 import N2 from './night/hero/N08.jpg';
 import N3 from './night/hero/N09.jpg';
 import N4 from './night/hero/N12.jpg';
+import locationBlack from './icons/location.png';
+import area from './icons/area.png';
+import seats from './icons/seats.png';
 
 export const assets = {
     logo,
@@ -82,7 +85,10 @@ export const assets = {
     N1,
     N2,
     N3,
-    N4
+    N4,
+    locationBlack,
+    area,
+    seats
 }
 
 

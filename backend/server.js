@@ -7,6 +7,10 @@ import userRouter from './routes/userRoute.js';
 import eventRouter from './routes/eventRoute.js';
 import mediaRouter from './routes/mediaRoute.js';
 import patnerRouter from './routes/partnerRoute.js';
+import typeRouter from './routes/typeRoute.js';
+import evenCategoryRouter from './routes/eventCategory.js';
+import eventArtistRouter from './routes/eventArtistRoute.js';
+import idNumberRouter from './routes/idNumberRoute.js';
 
 
 //App Confiq
@@ -30,11 +34,23 @@ app.use('/api/user', userRouter);
 // api endpoints events
 app.use('/api/event', eventRouter)
 
+// api endpoints events Category
+app.use('/api/eventcategories', evenCategoryRouter)
 
+// api endpoints events Artist's
+app.use('/api/event-artist', eventArtistRouter)
+
+
+
+// api endpoints types
+app.use('/api/type', typeRouter)
 
 
 // api endpoints parner
 app.use('/api/partner', patnerRouter);
+
+// api endpoints Serial Number
+app.use('/api/serial', idNumberRouter);
 
 
 // api endpoints Media

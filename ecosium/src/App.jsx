@@ -12,6 +12,8 @@ import Attractions from './pages/Attractions';
 import NightLifePage from './pages/NightLifePage';
 import MainLayout from './components/MainLayout';
 import MinimalLayout from './components/MinimalLayout';
+import EventsPage from './pages/EventsPage';
+import WeddingPage from './pages/WeddingPage';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           {/* Layout with Navbar & Footer */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path='/events' element={<EventsPage />} />
+            <Route path='/wedding' element={<WeddingPage />} />
             <Route path="/nightlife" element={<NightLifePage />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/orders" element={<Orders />} />

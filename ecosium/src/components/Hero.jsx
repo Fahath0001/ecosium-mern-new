@@ -257,7 +257,7 @@ const Hero = ({heroData}) => {
             <div className='w-full h-auto items-center justify-start flex gap-[5px] lg:gap-[10px] xl:gap-[15px] px-[5px] lg:px-[10px] xl:px-[15px] overflow-hidden' ref={mediaCarouselRef}>
                 {
                     heroData.map((list, i) => (
-                        <div ref={mediaSliderRef} key={list.id} id="slider" className='min-w-[90%] lg:min-w-[85%] xxxl:min-w-[80%] 4xl:min-w-[max(80%,1380px)] aspect-[16/13] lg:aspect-[16/12] xl:aspect-[16/9] items-center justify-center  flex overflow-hidden bg-slate-400 rounded-[15px] lg:rounded-[18px] border-[1px] border-gray-400'>
+                        <div ref={mediaSliderRef} key={list.id} id="slider" className='min-w-[90%] lg:min-w-[85%] xxxl:min-w-[80%] 4xl:min-w-[max(80%,1380px)] aspect-[16/13] lg:aspect-[16/12] xl:aspect-[16/7] items-center justify-center  flex overflow-hidden bg-slate-400 rounded-[15px] lg:rounded-[18px] border-[1px] border-gray-400'>
                             {
                                 list.type === 'video' ? (
                                     <video

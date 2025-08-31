@@ -4,7 +4,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 
@@ -56,13 +56,15 @@ button:disabled img {
 
 
 @layer utilities {
-  .no-spinner::-webkit-inner-spin-button,
-  .no-spinner::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
 
-  .no-spinner {
-    -moz-appearance: textfield; /* Firefox */
-  }
+    .no-spinner::-webkit-inner-spin-button,
+    .no-spinner::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .no-spinner {
+        -moz-appearance: textfield;
+        /* Firefox */
+    }
 }

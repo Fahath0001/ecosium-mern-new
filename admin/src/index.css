@@ -3,14 +3,37 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Inter', sans-serif;
-    text-overflow: ellipsis;
+  font-family: 'Inter', sans-serif;
+  text-overflow: ellipsis;
 
 
 }
 
 
-.sidebar.active{
-  background-color: aqua;
+.sidebar.active {
+  background-color: #38b6ff;
+  color: white;
 }
 
+.sidebar:hover {
+  background-color: #38b6ff;
+  color: white;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.button-header:hover{
+  border-radius: 10px;
+  border: transparent;
+  transition: borde-radius 1s ease-in;
+
+}

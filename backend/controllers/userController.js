@@ -121,7 +121,7 @@ const adminLogin = async (req, res) => {
         } else {
             res.json({
                 sucess: false,
-                message: "Check Your User Name or Pass word"
+                message: "Authentication failed. Please verify your credentials."
             })
         }
 

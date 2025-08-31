@@ -1,47 +1,72 @@
 import { useEffect, useState } from "react"
 import Navbar from "./componenets/Navbar"
-import Sidebar from "./componenets/Sidebar.jsx"
 import { Login } from "./componenets/Login.jsx"
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes } from "react-router-dom";
 import DashBord from "./pages/DashBord.jsx";
-import Add from "./pages/Add.jsx";
-import List from "./pages/List.jsx";
-import Orders from "./pages/Orders.jsx";
+import Events from "./pages/Events.jsx";
+import axios from 'axios';
+import Attrection from "./pages/Attrection.jsx";
+import PartnersPage from "./componenets/patnersComponents/PartnersPage.jsx";
+import NightLife from "./pages/NightLife.jsx";
 
 export const backendUrl = import.meta.env.VITE_ECOSIUM_BACKEND_URL;
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : "")
+  const [partners, setPartners] = useState([]);
+
 
   useEffect(() => {
     localStorage.setItem('token', token)
   }, [token])
 
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/api/partner/list`);
+        if (response.data.success) {
+          setPartners(response.data.partners);
+        }
+      } catch (error) {
+        console.error("Error fetching partners:", error);
+      }
+    };
+
+    fetchList(); // run once on mount
+    const interval = setInterval(fetchList, 3000); // poll every 3s
+
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, [backendUrl]); // only re-run if backendUrl changes
+
+
 
   return (
     <>
       <div className="w-full center flex-col ">
-        <ToastContainer />
         {
           token === "" ?
             <Login setToken={setToken} /> :
             <>
-              <Navbar setToken={setToken} />
               <div className="w-full flex items-start justify-between mt-[100px]">
-                <Sidebar />
-                <div className="w-full h-auto justify-end pl-[350px] ">
-                  <Routes>
-                    <Route path='/' element={<DashBord token={token} />} />
-                    <Route path='/add' element={<Add token={token} />} />
-                    <Route path='/list' element={<List token={token} />} />
-                    <Route path='/order' element={<Orders token={token} />} />
-                  </Routes>
+
+                <Navbar setToken={setToken} />
+                <div className="w-[calc(100%-300px)] h-screen items-center justify-center flex fixed top-0 right-0 overflow-y-scroll">
+                  <div className="w-full h-full items-start justify-center flex absolute top-0 z-[10]">
+
+                    <Routes>
+                      <Route path='/' element={<DashBord token={token} partners={partners} />} />
+                      <Route path='/event' element={<Events token={token} partners={partners} />} />
+                      <Route path='/night' element={<NightLife token={token} partners={partners} />} />
+                      <Route path='/attrection' element={<Attrection token={token} partners={partners} />} />
+                      <Route path="/:slug/:mid" element={<PartnersPage token={token} partners={partners} />} />
+                    </Routes>
+                  </div>
+
                 </div>
               </div>
             </>
-
         }
       </div>
     </>
