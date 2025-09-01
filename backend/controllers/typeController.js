@@ -1,8 +1,9 @@
-import typeModel from "../models/TypeModel.js";
+
 import { v2 as cloudinary } from 'cloudinary';
 
 // Function for add event
 import MediaModel from '../models/Media.js';
+import typeModel from '../models/typeModel.js';
 
 const addType = async (req, res) => {
     try {
