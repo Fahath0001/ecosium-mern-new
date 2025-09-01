@@ -2,29 +2,23 @@ import React from 'react'
 import PartnersCard from '../patnersComponents/PartnersCard';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import PatnersDashbordWidget from '../patnersComponents/PatnersDashbordWidget';
+import SalesBarChart from '../SalesBarChart';
 
 const AttrectionHome = ({ attrectionPatners }) => {
-    const [acvtivePartner, setActivePartner] = useState([]);
 
-    useEffect(() => {
-
-        // filter event partners
-        const filtered = attrectionPatners.filter(
-            (p) => p.patnerStatus != "pending"
-        );
-        setActivePartner(filtered);
-
-    }, [attrectionPatners]);
 
 
     return (
         <>
-            {
-                acvtivePartner.map((acvtivePartner, i) => (
-                    <PartnersCard patnerData={acvtivePartner} key={i} />
-                ))
+            <div
+                className='w-[100%] h-[100%] items-start justify-start flex p-5'
+            >
+                <SalesBarChart />
 
-            }
+                <PatnersDashbordWidget Patners={attrectionPatners} />
+            </div>
+
         </>
     )
 }
