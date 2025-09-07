@@ -23,7 +23,7 @@ connectCloudinary();
 // Middleware
 app.use(express.json());
 
-// ✅ Flexible CORS configuration
+// ✅ CORS configuration
 const allowedOrigins = [
   "http://localhost:5174",     // Vite dev server
   "https://ecosium.ae",        // Main domain
@@ -32,17 +32,22 @@ const allowedOrigins = [
   "https://merchant.ecosium.ae"// Merchant panel
 ];
 
+
+
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true); // allow Postman/curl with no origin
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
+    console.log("Blocked CORS for origin:", origin); // log blocked origin
     return callback(new Error("CORS not allowed for this origin: " + origin), false);
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
+
 
 // API Endpoints
 app.use('/api/user', userRouter);
