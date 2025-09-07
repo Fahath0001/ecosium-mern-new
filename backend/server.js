@@ -23,23 +23,25 @@ connectCloudinary();
 // Middleware
 app.use(express.json());
 
-// ✅ Correct CORS configuration
+// ✅ Flexible CORS configuration
 const allowedOrigins = [
-    "http://localhost:5174",        // Vite dev server
-    "https://admin.ecosium.ae",     // Admin frontend
-    "https://merchant.ecosium.ae",  // Merchant frontend
+  "http://localhost:5174",     // Vite dev server
+  "https://ecosium.ae",        // Main domain
+  "https://www.ecosium.ae",    // Main domain (www)
+  "https://admin.ecosium.ae",  // Admin panel
+  "https://merchant.ecosium.ae"// Merchant panel
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // allow Postman/curl
-        if (!allowedOrigins.includes(origin)) {
-            return callback(new Error("CORS not allowed for this origin"), false);
-        }
-        return callback(null, true);
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,  // allow cookies/auth headers
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow Postman/curl with no origin
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("CORS not allowed for this origin: " + origin), false);
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
 }));
 
 // API Endpoints
@@ -54,8 +56,10 @@ app.use('/api/upload-media', mediaRouter);
 
 // Test route
 app.get('/', (req, res) => {
-    res.send("✅ ecosium API Working");
+  res.send("✅ ecosium API Working");
 });
 
 // Start server
-app.listen(port, '0.0.0.0', () => console.log('✅ Server started on PORT : ' + port));
+app.listen(port, '0.0.0.0', () => 
+  console.log('✅ Server started on PORT : ' + port)
+);
