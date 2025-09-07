@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { assets } from '../assets/assets';
 import axios from 'axios';
 import { backendUrl } from '../App';
-import Notification from './Notification';
 
 const UplodeDetails = ({ setToken, id }) => {
   const [businessName, setBusinessName] = useState('');
@@ -12,21 +11,33 @@ const UplodeDetails = ({ setToken, id }) => {
   const [country, setCountry] = useState('');
   const [mapUrl, setMapUrl] = useState('');
   const [active, setActive] = useState(false);
-  const [files, setFiles] = useState([
-    { file: null, preview: null, type: null }, // thumbnail
-    { file: null, preview: null, type: null }, // media 1
-  ]);
-  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
+
+
 
   const textareaRef = useRef(null);
-  const maxMedia = 2;
+  const inputRef = useRef(null);
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
 
-  const handleInput = (ref) => {
-    if (!ref) return;
-    ref.style.height = "auto";
-    ref.style.height = `${ref.scrollHeight}px`;
+  const [files, setFiles] = useState([
+    { file: null, preview: null, type: null }, // Thumbnail
+    { file: null, preview: null, type: null }, // First media
+  ]);
+
+  // Auto resize textarea
+  const handleInput = () => {
+    const textarea = textareaRef.current;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
+  // Handle click for file inputs
+  const handleDivClick = (index) => {
+    if (index === 0) inputRef.current?.click();
+    if (index === 1) inputRef1.current?.click();
+  };
+
+  // Handle file change
   const handleFileChange = (e, index) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -34,12 +45,19 @@ const UplodeDetails = ({ setToken, id }) => {
     const fileType = file.type.startsWith('video') ? 'video' : 'image';
     const newFiles = [...files];
 
-    newFiles[index] = { file, preview: URL.createObjectURL(file), type: fileType };
+    newFiles[index] = {
+      file,
+      preview: URL.createObjectURL(file),
+      type: fileType,
+    };
 
-    if (index === files.length - 1 && files.length < maxMedia) {
-      newFiles.push({ file: null, preview: null, type: null });
-    }
+    setFiles(newFiles);
+  };
 
+  // Remove file
+  const handleRemoveFile = (index) => {
+    const newFiles = [...files];
+    newFiles[index] = { file: null, preview: null, type: null };
     setFiles(newFiles);
   };
 
@@ -60,29 +78,20 @@ const UplodeDetails = ({ setToken, id }) => {
     formData.append('partnerDetails', JSON.stringify(partnerDetails));
 
     try {
-      setNotification({ show: true, message: 'Updating, please wait...', type: 'info' });
 
       const res = await axios.put(`${backendUrl}/api/partner/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      setNotification({ show: true, message: res.data.message || 'Update successful', type: 'success' });
       console.log('Update success:', res.data);
     } catch (err) {
       console.error('Update failed:', err.response?.data || err.message);
-      setNotification({ show: true, message: err.response?.data?.message || 'Update failed', type: 'error' });
     }
   };
 
   return (
     <>
-      {notification.show && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification({ ...notification, show: false })}
-        />
-      )}
+
 
       {/* Background */}
       <div className="w-full h-screen flex items-center justify-center fixed z-0">
@@ -91,12 +100,18 @@ const UplodeDetails = ({ setToken, id }) => {
 
       {/* Form */}
       <div className='w-full min-h-screen flex items-center justify-center bg-[#ffffffd7] z-[2] absolute py-[150px]'>
-        <div className='w-[80%] max-w-[1000px] flex flex-col gap-[20px] p-10 border-[2px] border-gray-300 bg-[#ffffff]'>
-          <img className='w-[200px]' src={assets.logo} alt="Ecosium Logo" />
-          <h1 className='text-4xl font-semibold tracking-[1px] text-primary text-center mt-[20px]'>Thank you for logging in,</h1>
-          <h2 className='text-xl font-medium'>Let’s get your business profile set up.</h2>
+        <div className='w-[80%] max-w-[1000px] items-center justify-center flex flex-col gap-[20px] p-10 border-[2px] border-gray-300 bg-[#ffffff]'>
+          <div
+            className='w-full items-center justify-center flex flex-col gap-3'
+          >
 
-          <form onSubmit={handleSubmit} className='w-[700px] flex flex-col gap-[10px] py-[30px]'>
+            <img className='w-[200px]' src={assets.logo} alt="Ecosium Logo" />
+
+            <h1 className='text-4xl font-semibold tracking-[1px] text-primary text-center mt-[20px]'>Thank you for logging in,</h1>
+            <h2 className='text-xl font-medium'>Let’s get your business profile set up.</h2>
+          </div>
+
+          <form onSubmit={handleSubmit} className='w-[80%] max-w-[1000px]  flex flex-col gap-[10px] py-[30px]'>
 
             {/* Business Name */}
             <p className='text-lg w-[90%]'>Enter Your Business Name in Tradelicence:</p>
@@ -155,6 +170,95 @@ const UplodeDetails = ({ setToken, id }) => {
             <p className='text-lg w-[90%] mt-[10px]'>Enter your business Google Map URL:</p>
             <input type="text" value={mapUrl} placeholder="Google Map URL" onChange={(e) => setMapUrl(e.target.value)} className="w-[90%] border border-gray-300 text-[18px] py-2 px-3 rounded outline-none" />
 
+            {/* Upload Section */}
+            <p className='text-lg w-[90%] mt-[10px]'>
+              Add your Company Logo:
+            </p>
+
+            {/* Profile Image */}
+            <div className="w-[90%] h-auto flex flex-col gap-[5px]">
+              <div
+                onClick={() => handleDivClick(0)}
+                className="relative w-[calc(50%-10px)] aspect-[16/9] flex items-center justify-center cursor-pointer border-[2px]"
+              >
+                {files[0]?.preview ? (
+                  <>
+                    {files[0].type === "image" ? (
+                      <img src={files[0].preview} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <video src={files[0].preview} className="w-full h-full object-cover" controls />
+                    )}
+                    <button
+                      type="button"
+                      className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded"
+                      onClick={(e) => { e.stopPropagation(); handleRemoveFile(0); }}
+                    >
+                      ❌
+                    </button>
+                  </>
+                ) : (
+                  <div
+                    className='items-center justify-center flex'
+                  >
+                    <img src={assets.uploade} alt="Upload" className="w-[70px]" />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  hidden
+                  ref={inputRef}
+                  accept="image/*,video/*"
+                  onChange={(e) => handleFileChange(e, 0)}
+                />
+              </div>
+              <p className='text-lg w-[90%] mt-[10px]'>
+                Add Cover Image:
+              </p>
+            </div>
+
+            {/* Other Media */}
+            <div className="w-[100%] flex gap-[15px]">
+              {[1].map((i) => (
+                <div
+                  key={i}
+                  onClick={() => handleDivClick(i)}
+                  className="relative w-[calc(50%-10px)] aspect-[16/9] flex items-center justify-center cursor-pointer border-[2px]"
+                >
+                  {files[i]?.preview ? (
+                    <>
+                      {files[i].type === "image" ? (
+                        <img src={files[i].preview} alt={`Media${i}`} className="w-full h-full object-cover" />
+                      ) : (
+                        <video src={files[i].preview} className="w-full h-full object-cover" controls />
+                      )}
+                      <button
+                        type="button"
+                        className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded"
+                        onClick={(e) => { e.stopPropagation(); handleRemoveFile(i); }}
+                      >
+                        ❌
+                      </button>
+                    </>
+                  ) : (
+                    <div
+                      className='items-center justify-center flex'
+                    >
+                      <img src={assets.uploade} alt="Upload" className="w-[80px]" />
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    hidden
+                    ref={i === 1 ? inputRef1 : inputRef2}
+                    accept="image/*,video/*"
+                    onChange={(e) => handleFileChange(e, i)}
+                  />
+                </div>
+              ))}
+            </div>
+
+
+
             {/* Checkbox & Submit */}
             <div className="w-[90%] flex flex-col mt-[30px] gap-[10px]">
               <div className='flex items-center gap-[10px]'>
@@ -163,7 +267,10 @@ const UplodeDetails = ({ setToken, id }) => {
               </div>
 
               <div className="flex gap-[20px] mt-5">
-                <button type="submit" disabled={!active} className={`w-[250px] py-[10px] text-[16px] font-semibold text-white tracking-[1px] rounded-xl ${active ? 'bg-primary' : 'bg-gray-400'}`}>
+                <button type="submit"
+                  onClick={handleSubmit}
+                  disabled={!active}
+                  className={`w-[250px] py-[10px] text-[16px] font-semibold text-white tracking-[1px] rounded-xl ${active ? 'bg-primary' : 'bg-gray-400'}`}>
                   Submit
                 </button>
                 <button type="button" className="w-[250px] bg-primary py-[10px] text-[16px] font-semibold text-white tracking-[1px] rounded-xl" onClick={() => setToken('')}>

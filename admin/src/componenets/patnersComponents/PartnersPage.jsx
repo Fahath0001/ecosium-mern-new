@@ -73,7 +73,7 @@ const PartnersPage = ({ partners }) => {
                             >
 
                                 <img
-                                    src={partneData.partnerDetails.mediaFile[0].mediaUrl}
+                                    src={partneData.partnerDetails.mediaFile[1].mediaUrl}
                                     className='w-[100%] h-[100%] object-cover object-top'
                                     alt="Patner Cover Image"
                                 />
@@ -82,7 +82,7 @@ const PartnersPage = ({ partners }) => {
                                 className='w-[250px] aspect-square overflow-hidden items-center justify-center flex absolute bottom-[-20px] left-[100px] rounded-lg border-primary border-[5px]'
                             >
                                 <img
-                                    src={partneData.partnerDetails.mediaFile[1].mediaUrl}
+                                    src={partneData.partnerDetails.mediaFile[0].mediaUrl}
                                     className='w-[100%] h-[100%] object-cover object-top'
                                     alt=""
                                 />
@@ -250,6 +250,7 @@ const PartnersPage = ({ partners }) => {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 ) : (
                     <h1>

@@ -33,7 +33,7 @@ const MainCategory = (props) => {
             {/* Main Category */}
             {/* Main Category */}
             <div
-                className='w-[400px] h-full mr-[20px] rounded-xl items-center justify-start flex flex-col'
+                className='w-[200px] h-full mr-[20px] rounded-xl items-center justify-start flex flex-col '
                 style={{
                     backgroundImage: `linear-gradient(${bgColor})`,
                     height: safeHeight,
@@ -45,11 +45,11 @@ const MainCategory = (props) => {
                     <img className=' object-center' src={thumbnail} alt="Icon" />
                 </div>
                 <h1
-                    className='text-[30px] font-semibold tracking-[1px]'
+                    className='text-[30px] font-semibold tracking-[1px] text-white'
                 >
                     {title}
                 </h1>
-                <p className='w-[90%] py-[10px] text-wrap text-center text-[20px]'>
+                <p className='w-[90%] py-[10px] text-wrap text-center text-[20px] text-white'>
                     {
                         dis
                     }

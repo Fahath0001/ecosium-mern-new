@@ -1,0 +1,48 @@
+/* pdf.css */
+
+/* Hide annotation layer (links, highlights) if you don’t need it */
+.react-pdf__Page__annotations {
+  display: none;
+}
+
+/* Hide invisible text layer (copy/paste layer) */
+.react-pdf__Page__textContent {
+  display: none;
+}
+
+/* Center the PDF preview in its container */
+.react-pdf__Document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional: style the PDF thumbnail container */
+.pdf-thumbnail {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
+}
+
+.pdf-thumbnail:hover {
+  transform: scale(1.02);
+}
+
+/* Style for the Cancel button */
+.pdf-cancel-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pdf-cancel-btn:hover {
+  background-color: #c53030;
+}

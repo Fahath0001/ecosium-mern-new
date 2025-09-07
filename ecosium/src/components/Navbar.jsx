@@ -1,9 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { assets } from '../assets/assets'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
     const scrollContainer = useRef(null);
+    const [active, setActive] = useState(false);
+
+
+    useEffect(() => {
+        console.log("Active is " + active);
+    }, [active])
+
 
     return (
         <>
@@ -15,16 +22,23 @@ const Navbar = () => {
                             ECOSIUM
                         </h1>
                     </NavLink>
-                    <div className='w-auto h-auto items-center justify-center flex px-[2%] gap-[15px] xl:gap-[40px] '>
-                        <Link>
-                            <img className='h-[24px] xl:h-[30px]' src={assets.whislist} alt="" />
-                        </Link>
-                        <Link>
-                            <img className='h-[24px] xl:h-[30px]' src={assets.cart} alt="" />
-                        </Link>
-                        <Link to={'/login'}>
-                            <img className='h-[24px] xl:h-[30px]' src={assets.login} alt="" />
-                        </Link>
+                    <div
+                        onClick={() => setActive(!active)}
+                        className='w-auto h-auto items-center justify-center flex p-[10px] xl:gap-[20px] rounded-lg relative'
+                    >
+                        <img className='h-[00px] xl:h-[30px]' src={assets.location} alt="" />
+                        <div className='w-auot h-auto items-start justify-start flex flex-col'>
+                            <h1
+                                className= 'font-bold text-primary'
+                            >
+                                Duabi
+                            </h1>
+                            <h2>
+                                UAE
+                            </h2>
+
+                        </div>
+
                     </div>
                 </div>
                 <hr className='bg-gray w-full h-[2px]' />
@@ -46,9 +60,6 @@ const Navbar = () => {
                             </NavLink>
                             <NavLink className='text-[14px] xs:text-[15px] xl:text-[15px] xxxl:text-xl font-medium px-4 py-1 hover:bg-primary hover:text-white hover:rounded-3xl'>
                                 Birthday
-                            </NavLink>
-                            <NavLink to={'/'} className='text-[14px] xs:text-[15px] xl:text-[15px] xxxl:text-xl font-medium px-4 py-1 hover:bg-primary hover:text-white hover:rounded-3xl'>
-                                Deliveries
                             </NavLink>
                         </div>
                     </div>

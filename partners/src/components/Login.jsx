@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import axios from 'axios';
 import { backendUrl } from '../App';
+import Notification from './Notification';
 
 
 
@@ -17,6 +18,13 @@ const Login = ({ setToken, setId }) => {
     const [password, setPassword] = useState("");
     const [businessType, setBusinessType] = useState("");
     const [mid, setMid] = useState(0);
+
+
+    const [notification, setNotification] = useState({
+        show: false,
+        message: '',
+        type: '',
+    });
 
 
 
@@ -95,8 +103,8 @@ const Login = ({ setToken, setId }) => {
                 console.log("sucess");
                 console.log(businessType);
                 console.log(mid);
-                
-                
+
+
                 try {
                     const response1 = await axios.put(`${backendUrl}/api/serial/update`, {
                         name: businessType,
@@ -104,8 +112,9 @@ const Login = ({ setToken, setId }) => {
                     });
 
                     if (response1.data.success) {
+                         setNotification({ show: true, message: response.data.message || 'Successfull', type: 'error' });
                         console.log(response1.data.message);
-                        
+
                     }
                 } catch (error) {
                     console.error("Error updating serial:", error);
@@ -114,10 +123,12 @@ const Login = ({ setToken, setId }) => {
                 console.log("Partner ID:", response.data.id);
             } else {
                 console.log("Registration failed:", response.data.message);
+                 setNotification({ show: true, message: response.data.message || 'faild', type: 'error' });
             }
 
         } catch (error) {
             console.error("Registration error:", error.response?.data || error.message);
+            setNotification({ show: true, message: response.data.message || 'faild', type: 'error' });
         }
     };
 
@@ -156,6 +167,16 @@ const Login = ({ setToken, setId }) => {
 
     return (
         <>
+
+            {notification.show && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={() => setNotification({ ...notification, show: false })}
+                />
+            )}
+
+
             <div className="w-full min-h-screen items-center justify-center flex bg-gray-100 relative overflow-hidden">
                 <div className="w-screen h-screen items-center justify-center flex fixed z-[0] top-0 ">
                     <img className='w-[100%] h-[100%] object-cover' src={assets.patnerBg} alt="" />

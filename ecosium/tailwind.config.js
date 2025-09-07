@@ -13,7 +13,8 @@ export default {
       colors: {
         primary: '#38b6ff',
         secondary: '#8fd6ff',
-        bgwhite:'#ffffffdb'
+        bgwhite:'#ffffffdb',
+        attrection: '#13505B'
       },
       screens: {
         xxs: '235px',              // 235 - 375
