@@ -10,7 +10,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UplodeDetails from "./components/UplodeDetails";
 import AddEvent from "./pages/AddEvent";
-import Navbar from "./components/Navbar";
+import TermAndContitions from "./pages/TermAndContitions";
+import { assets } from "./assets/assets";
 
 export const backendUrl = import.meta.env.VITE_ECOSIUM_BACKEND_URL;
 
@@ -23,7 +24,6 @@ function App() {
     localStorage.setItem('token', token);
     localStorage.setItem('id', id);
   }, [token, id]);
-  console.log(status);
 
 
 
@@ -48,37 +48,84 @@ function App() {
       return () => clearInterval(interval);
     }
   }, [id]);
-  console.log(token);
 
 
 
 
   return (
     <>
-    
-      {
-        token === "" ?
-          <Login setToken={setToken} setId={setId} /> : (
-            status === "pending" ?
-              <>
-                <UplodeDetails setToken={setToken} id={id} />
-              </> : (
-                <>
-                  <div className="w-full h-auto">
-                    <Routes>
-                      <Route element={<MinimalLayout />}>
-                        <Route path="/" element={<Dashbord setToken={setToken} status={status} />} />
-                        <Route path="/add" element={<AddEvent setToken={setToken} />} />
-                      </Route>
-                    </Routes>
-                  </div >
-                </>
+      <div
+        className='hidden xl:block'
+      >
+        <>
+
+          {
+            token === "" ?
+              <Login setToken={setToken} setId={setId} /> : (
+                status === "pending" ?
+                  <>
+                    <UplodeDetails setToken={setToken} id={id} />
+                  </> : (
+                    <>
+                      <div className="w-full h-auto">
+                        <Routes>
+                          <Route element={<MinimalLayout />}>
+                            <Route path="/" element={<Dashbord setToken={setToken} status={status} />} />
+                            <Route path="/add" element={<AddEvent setToken={setToken} />} />
+                            <Route path="/term_and_conditions" element={<TermAndContitions />} />
+                          </Route>
+                        </Routes>
+                      </div >
+                    </>
+                  )
+
               )
+          }
+        </>
+      </div>
 
-          )
-
+      {
+        // Mobile Device
+        // Mobile Device
       }
+      <div
+        className='w-full
+                   min-h-screen
+                   flex xl:hidden
+                   items-center justify-center '
+      >
+        <div
+          className="w-[90%]
+                     gap-6
+                     items-center justify-center flex flex-col"
+        >
+          <img
+            className="w-[180px]"
+            src={assets.logo}
+            alt=""
+          />
+          <h1
+            className="text-4xl
+                     font-extrabold
+                     tracking-[3px]
+                     text-primary"
+          >
+            ECOSIUM
+          </h1>
+          <h2
+            className="w-[70%]
+                       text-center
+                       text-wrap
+                       text-lg"
+          >
+            content is displayed only on tablets and desktops.
+          </h2>
+        </div>
+
+      </div>
     </>
+
+
   )
 
   /*

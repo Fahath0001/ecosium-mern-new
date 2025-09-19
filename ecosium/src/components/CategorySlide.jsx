@@ -49,14 +49,14 @@ const CategorySlide = ({ type, hedding }) => {
       setCategoryData(attrectionCategory);
     }
 
-     if (type === "weddingcategory") {
+    if (type === "weddingcategory") {
       setCategoryData(weddingCategory);
     }
     if (type === "main") {
       setCategoryData(mainData);
     }
 
-    
+
 
   }, [type]);
 
@@ -106,15 +106,26 @@ const CategorySlide = ({ type, hedding }) => {
 
   return (
     <>
-      <div className='w-full flex flex-col items-center justify-center mt-[15px] sm:mt-[20px] lg:mt-[25px] xl:mt-[30px] xxl:mt-[35px] xxxl:mt-10 mb-[15px] sm:mb-[20px] lg:mb-[25px] xl:mb-[30px] xxl:mb-[35px] xxxl:mb-[40px] whitespace-nowrap scrollbar-none cursor-grab select-none '>
+      <div className='
+      w-full 
+      mt-[15px] sm:mt-[20px] lg:mt-[25px] xl:mt-[30px] xxl:mt-[35px]
+      mb-[15px] sm:mb-[20px] lg:mb-[25px] xl:mb-[30px] xxl:mb-[35px] xxxl:mb-[40px]
+      xxxl:mt-10  
+      flex flex-col items-center justify-center whitespace-nowrap scrollbar-none cursor-grab select-none '>
         {/* Event Category Headdings */}
         {/* Event Category Headdings */}
         {/* Event Category Headdings */}
         <div className='w-full flex items-end justify-between'>
-          <h1 className='text-[16px] xs:text-[18px] sm:text-[20px] lg:text-2xl xxl:text-3xl font-bold'>
+          <h1 className='
+          text-[16px] xs:text-[18px] sm:text-[20px] lg:text-2xl xxl:text-3xl
+          font-bold'
+          >
             {hedding}
           </h1>
-          <p className='text-[14px] xs:text-[14px] sm:text-[16px] lg:text-lg xxl:text-lg font-medium cursor-pointer'>
+          <p className='
+          text-[14px] xs:text-[14px] sm:text-[16px] lg:text-lg xxl:text-lg 
+          font-medium cursor-pointer'
+          >
             See All
           </p>
         </div>
@@ -128,9 +139,17 @@ const CategorySlide = ({ type, hedding }) => {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseUp}
           onMouseUp={handleMouseUp}
-          className='w-full h-auto gap-[5px] items-center justify-start flex overflow-x-auto event-category mt-[15px] sm:mt-[20px] lg:mt-[25] xxxl:mt-[30px]'>
+          className='w-full
+                     h-auto
+                     gap-[5px]
+                     mt-[15px] sm:mt-[20px] lg:mt-[25] xxxl:mt-[30px]
+                     items-center justify-start flex overflow-x-auto event-category '
+        >
           <div
-            className='w-auto h-full relative items-stretch justify-start flex'
+            className='w-auto
+                       h-full
+                       relative
+                       items-stretch justify-start flex'
             ref={sliderRef}
           >
             {

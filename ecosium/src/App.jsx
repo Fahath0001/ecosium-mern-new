@@ -24,13 +24,13 @@ function App() {
           {/* Layout with Navbar & Footer */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path='/events' element={<EventsPage />} />
+            <Route path='/event' element={<EventsPage />} />
             <Route path='/wedding' element={<WeddingPage />} />
             <Route path="/nightlife" element={<NightLifePage />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/placeorder" element={<PlaceOrder />} />
-            <Route path="/attrections" element={<Attractions />} />
+            <Route path="/attraction" element={<Attractions />} />
             <Route path="/:slug/:id" element={<Event />} />
           </Route>
 

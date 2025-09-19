@@ -5,7 +5,7 @@ import React from 'react'
 import { assets } from '../assets/assets'
 
 const NightLife = () => {
-      const navigate = useNavigate();
+    const navigate = useNavigate();
     useGSAP(() => {
         const tl = gsap.timeline({
             repeat: -1,
@@ -64,18 +64,18 @@ const NightLife = () => {
                 <div className="w-[95%] sm:w-[92%] md:w-[90%] xl:w-[87%] xxl:w-[85%] xxxl:w-[80%] max-w-[1600px] h-auto bg-pink-300 rounded-xl xxxl:rounded-[30px] relative overflow-hidden">
                     <div className="w-full h-[450px] sm:h-[470px] md:h-[520px] xxxl:h-[500px] items-center justify-start xxl:justify-center flex flex-col z-10 mt-[100px] md:mt-[120px] gap-[15px] md:gap-[25px] xxl:gap-[30px]">
                         <h1 id='nightlife' className='text-[35px] xs:text-[45px] sm:text-[55px] md:text-[65px] lg:text-[75px] xxxl:text-[100px] font-black text-stroke z-10'>
-                            Night Life
+                            Night to Remember
                         </h1>
                         <p className='w-[90%] text-[14px] xs:text-[16px] sm:text-[16px] md:text-[18px] lg:text-[20px] xxxl:text-[24px] font-bold text-center text-black z-10'>
-                            Experience the vibrant and exciting nightlife,
+                            Experience the ultimate night out with hottest clubs,
                             <br />
-                            where unforgettable moments await.
+                            live DJs, and epic parties all in one place.
                             <br />
-                            Explore the city's best bars, clubs, and live music venues,
-                            <br />
-                            offering an atmosphere like no other.
+                            Book instantly, skip the lines, and make every moment
+                             <br />
+                            count—your unforgettable night dream starts here
                         </p>
-                        <button  onClick={() => navigate('/nightlife')} className="py-[10px] px-[25px] bg-primary text-[16px] sm:text-[18px] md:text-[20px] lg:text-[21px] xxl:text-[22px] font-bold text-white rounded-xl tracking-[1px] hover:tracking-[4px] transition-all duration-[500ms] z-10">
+                        <button onClick={() => navigate('/nightlife')} className="py-[10px] px-[25px] bg-primary text-[16px] sm:text-[18px] md:text-[20px] lg:text-[21px] xxl:text-[22px] font-bold text-white rounded-xl tracking-[1px] hover:tracking-[4px] transition-all duration-[500ms] z-10">
                             Explore
                         </button>
                         <div className="w-auto h-auto items-center justify-center flex py-[20px] xxxl:py-[30px] px-[20px] xxxl:px-[50px] clip-path-ellipse-custom bg-primary absolute top-0 left-[5px] xxxl:left-[20px] rounded-2xl">

@@ -20,7 +20,6 @@ const Dashbord = ({ setToken, status, name }) => {
         },
 
     ];
-    console.log("Active is :" + active);
     return (
         <>
             {
